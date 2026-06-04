@@ -21,23 +21,12 @@ public class KeySpawner : MonoBehaviour
     public void SpawnKey(KeyTypes keyType, Vector3 postion)
     {
         Debug.LogWarning("SpawnKey");
+
         foreach (var key in _keys)
         {
-            if (keyType == KeyTypes.Gold)
+            if(keyType == key.KeyType && keyType != KeyTypes.None)
             {
                 Instantiate(key, postion, Quaternion.identity);
-            }
-            else if (keyType == KeyTypes.Silver)
-            {
-                Instantiate(key, postion, Quaternion.identity);
-            }
-            else if (keyType == KeyTypes.Bronze)
-            {
-                Debug.LogWarning("Bronze");
-                Instantiate(key, postion, Quaternion.identity);
-            }else
-            {
-                Debug.LogWarning("None");
             }
         }
     }

@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,7 +5,7 @@ public class PlayerInventory : MonoBehaviour
 {
     public static PlayerInventory Instance { get; private set; }
 
-    private List<KeyTypes> _collectedKeys = new List<KeyTypes>();
+    private List<KeyTypes> collectedKeys = new List<KeyTypes>();
 
     private void Awake()
     {
@@ -20,25 +19,30 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    public void AddKeyToInventory (KeyTypes key)
+    public void AddKeyToInventory(KeyTypes key)
     {
-        if (!_collectedKeys.Contains(key))
+        if (key == KeyTypes.None)
         {
-            _collectedKeys.Add(key);
+            Debug.LogWarning("Trying to add None key. Check the key prefab Inspector.");
+            return;
         }
-    }   
 
-    public bool TryGetKey(KeyTypes keyTypes)
-    {
-        foreach (var key in _collectedKeys)
+        if (!collectedKeys.Contains(key))
         {
-            if (key == keyTypes)
-            {
-                Debug.LogWarning("Key used: " + key);
-                _collectedKeys.Remove(key);
-                return true;
-            }
+            collectedKeys.Add(key);
+            Debug.Log("Key added: " + key);
         }
+    }
+
+    public bool TryGetKey(KeyTypes keyType)
+    {
+        if (collectedKeys.Contains(keyType))
+        {
+            collectedKeys.Remove(keyType);
+            Debug.Log("Key used: " + keyType);
+            return true;
+        }
+
         return false;
     }
 }

@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9bc7f749e620e0419b93176288d28bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Key
-  KeyType: 0
+  KeyType: 3
 --- !u!54 &2567731899430078084
 Rigidbody:
   m_ObjectHideFlags: 0
