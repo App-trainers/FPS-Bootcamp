@@ -18,16 +18,30 @@ public class KeySpawner : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public void SpawnKey(KeyTypes keyType, Vector3 postion)
+    public bool SpawnKey(KeyTypes keyType, Vector3 position)
     {
-        Debug.LogWarning("SpawnKey");
+        if (keyType == KeyTypes.None)
+            return false;
+
+        if (_keys == null || _keys.Count == 0)
+        {
+            Debug.LogWarning("No key prefabs are configured on KeySpawner.", this);
+            return false;
+        }
 
         foreach (var key in _keys)
         {
-            if(keyType == key.KeyType && keyType != KeyTypes.None)
+            if (key == null)
+                continue;
+
+            if (keyType == key.KeyType)
             {
-                Instantiate(key, postion, Quaternion.identity);
+                Instantiate(key, position, Quaternion.identity);
+                return true;
             }
         }
+
+        Debug.LogWarning($"No key prefab configured for {keyType}.", this);
+        return false;
     }
 }

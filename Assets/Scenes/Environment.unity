@@ -968,6 +968,10 @@ PrefabInstance:
       value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 5375574967355437206, guid: 2f062f2775eb5264faf947deca42a885, type: 3}
+      propertyPath: sprintSpeed
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 5375574967355437206, guid: 2f062f2775eb5264faf947deca42a885, type: 3}
       propertyPath: mouseSensitivity
       value: 300
       objectReference: {fileID: 0}
@@ -6711,7 +6715,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1606552415
 Transform:
   m_ObjectHideFlags: 0

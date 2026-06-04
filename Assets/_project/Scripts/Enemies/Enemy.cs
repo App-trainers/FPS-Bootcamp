@@ -3,6 +3,7 @@ using UnityEngine;
 public partial class Enemy : MonoBehaviour
 {
     [SerializeField] private KeyTypes keyType;
+    private Collider enemyCollider;
 
     float rotationSpeed = 200f;
     float xRotation;
@@ -12,6 +13,11 @@ public partial class Enemy : MonoBehaviour
     void OnEnable()
     {
         HitEnemy();
+    }
+
+    private void Awake()
+    {
+        enemyCollider = GetComponent<Collider>();
     }
 
     void Update()
@@ -43,8 +49,10 @@ public partial class Enemy : MonoBehaviour
 
         isDead = true;
         targetXRotation = 70f;
+        enemyCollider.isTrigger = true;
 
-        if (KeySpawner.Instance != null)
-            KeySpawner.Instance.SpawnKey(keyType, transform.position - new Vector3(0, .25f, 0));
+        KeySpawner.Instance.SpawnKey(keyType, transform.position + new Vector3(0, 4, 0));
     }
+
+  
 }
