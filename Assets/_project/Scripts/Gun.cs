@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-
+using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
@@ -44,6 +43,7 @@ public class Gun : MonoBehaviour
         if (Physics.Raycast(ray, out hit, range))
         {
             EnemyHealth enemy = hit.collider.GetComponentInParent<EnemyHealth>();
+
             if (enemy != null)
                 enemy.TakeDamage(damage);
         }
@@ -53,9 +53,12 @@ public class Gun : MonoBehaviour
 
     void PlayMuzzleFlash()
     {
-        muzzleFlash.transform.position = muzzle.position;
-        muzzleFlash.transform.rotation = muzzle.rotation;
+        if (muzzleFlash == null || muzzle == null)
+            return;
 
-        muzzleFlash.Play();
+        ParticleSystem flash = Instantiate(muzzleFlash, muzzle.position, muzzle.rotation);
+        flash.Play();
+
+        Destroy(flash.gameObject, 2f);
     }
 }
