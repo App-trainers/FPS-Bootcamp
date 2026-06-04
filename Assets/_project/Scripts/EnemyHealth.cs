@@ -8,8 +8,16 @@ public class EnemyHealth : MonoBehaviour
     {
         health -= damage;
 
+        Enemy enemy = GetComponentInParent<Enemy>();
+
         if (health <= 0)
+        {
             Die();
+            return;
+        }
+
+        if (enemy != null)
+            enemy.HitEnemy();
     }
 
     void Die()
@@ -18,7 +26,5 @@ public class EnemyHealth : MonoBehaviour
 
         if (enemy != null)
             enemy.KillEnemy();
-        else
-            Destroy(gameObject);
     }
 }
