@@ -5,13 +5,22 @@ public class Gun : MonoBehaviour
 {
     public Camera playerCamera;
     public ParticleSystem muzzleFlash;
+    public Transform muzzle;
 
     public float range = 100f;
     public float damage = 20f;
     public float fireRate = 0.2f;
 
-    float nextTimeToFire;
-    public Transform muzzle;
+    private float nextTimeToFire;
+
+    void Start()
+    {
+        if (playerCamera == null)
+            playerCamera = GetComponentInParent<Camera>();
+
+        if (playerCamera == null)
+            playerCamera = Camera.main;
+    }
 
     void Update()
     {
@@ -24,27 +33,29 @@ public class Gun : MonoBehaviour
 
     void Shoot()
     {
-        Ray cameraRay = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        if (playerCamera == null)
+            return;
+
+        PlayMuzzleFlash();
+
+        Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
 
-        Vector3 targetPoint;
-
-        if (Physics.Raycast(cameraRay, out hit, range))
-            targetPoint = hit.point;
-        else
-            targetPoint = cameraRay.GetPoint(range);
-
-        Vector3 direction = (targetPoint - muzzle.position).normalized;
-
-        if (Physics.Raycast(muzzle.position, direction, out hit, range))
+        if (Physics.Raycast(ray, out hit, range))
         {
-            Debug.Log("Hit: " + hit.collider.name);
-
-            EnemyHealth enemy = hit.collider.GetComponent<EnemyHealth>();
+            EnemyHealth enemy = hit.collider.GetComponentInParent<EnemyHealth>();
             if (enemy != null)
                 enemy.TakeDamage(damage);
         }
 
-        Debug.DrawRay(muzzle.position, direction * range, Color.red, 1f);
+        Debug.DrawRay(ray.origin, ray.direction * range, Color.red, 1f);
+    }
+
+    void PlayMuzzleFlash()
+    {
+        muzzleFlash.transform.position = muzzle.position;
+        muzzleFlash.transform.rotation = muzzle.rotation;
+
+        muzzleFlash.Play();
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public partial class Enemy : MonoBehaviour
@@ -8,8 +7,9 @@ public partial class Enemy : MonoBehaviour
     [ContextMenu("Kill Enemy")]
     public void KillEnemy()
     {
-        Debug.LogWarning($"{keyType.ToString()}");
-        KeySpawner.Instance.SpawnKey(keyType, transform.position - new Vector3(0, .25f, 0));
+        if (KeySpawner.Instance != null)
+            KeySpawner.Instance.SpawnKey(keyType, transform.position - new Vector3(0, .25f, 0));
+
         Destroy(gameObject);
     }
 }
