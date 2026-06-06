@@ -7,4 +7,10 @@ public class ScnenesManager : MonoBehaviour
     {
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
     }
+
+    public void ChangeScene(string sceneName)
+    {
+        //use scene name or scene index
+        SceneManager.LoadSceneAsync(sceneName);
+    }
 }
